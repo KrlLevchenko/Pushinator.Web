@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using LinqToDB;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Pushinator.Web.Core.Auth;
 using Pushinator.Web.Model;
 
 namespace Pushinator.Web.Handlers.Auth
@@ -25,7 +26,8 @@ namespace Pushinator.Web.Handlers.Auth
                 var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Credentials.Password);
                 if (result != PasswordVerificationResult.Failed)
                 {
-                    return Response.Success("token_will_be_here");
+                    return Response.Success(JwtTokenGenerator.GenerateToken(user.Id.ToString(),
+                        user.Name));
                 }
             }
 

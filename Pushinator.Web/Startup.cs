@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,7 @@ namespace Pushinator.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(configure => configure.Filters.Add(new AuthorizeFilter()));
 
             var connectionString = _configuration.GetConnectionString("Db");
             
@@ -38,6 +39,8 @@ namespace Pushinator.Web
             services.AddMigrator(connectionString);
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddJwt();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,8 +49,11 @@ namespace Pushinator.Web
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-
             app.UseExceptionHandlingMiddleware();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
