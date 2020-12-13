@@ -6,6 +6,6 @@ namespace Pushinator.Web.ExceptionHandling.ExceptionHandlers
 {
     public class ValidationFailedExceptionHandler: ExceptionHandlerBase<ValidationFailedException>
     {
-        protected override Task<ExceptionHandleResult> HandleInternal(ValidationFailedException exception) => Task.FromResult(new ExceptionHandleResult(422, exception.Message));
+        protected override Task<ExceptionHandleResult> HandleInternal(ValidationFailedException exception) => Task.FromResult(new ExceptionHandleResult(400, exception.Message));
     }
 }
