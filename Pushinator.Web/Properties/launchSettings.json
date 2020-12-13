@@ -1,5 +1,10 @@
 ﻿{  
-  "profiles": {  
+  "profiles": {
+    "Pushinator.Web migration": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "commandLineArgs": "--migrate-db"
+    },
     "Pushinator.Web": {
       "commandName": "Project",
       "launchBrowser": false,
