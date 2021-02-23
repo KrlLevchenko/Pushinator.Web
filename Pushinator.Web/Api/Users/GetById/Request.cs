@@ -2,7 +2,7 @@ using Dodo.Primitives;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Pushinator.Web.Handlers.Users.GetById
+namespace Pushinator.Web.Api.Users.GetById
 {
     public class Request: IRequest<Response>
     {

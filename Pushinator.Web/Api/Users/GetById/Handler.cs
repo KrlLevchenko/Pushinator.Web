@@ -8,7 +8,7 @@ using MediatR;
 using Pushinator.Web.ExceptionHandling.Exceptions;
 using Pushinator.Web.Model;
 
-namespace Pushinator.Web.Handlers.Users.GetById
+namespace Pushinator.Web.Api.Users.GetById
 {
     public class Handler: IRequestHandler<Request,Response>
     {

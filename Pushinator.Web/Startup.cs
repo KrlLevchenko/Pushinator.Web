@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -39,8 +40,8 @@ namespace Pushinator.Web
             services.AddMigrator(connectionString);
 
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddJwt();
+            services.AddHttpContextAccessor();
+            services.AddAuth(_configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

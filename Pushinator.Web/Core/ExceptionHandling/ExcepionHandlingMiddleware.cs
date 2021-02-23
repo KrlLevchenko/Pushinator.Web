@@ -16,7 +16,7 @@ namespace Pushinator.Web.Core.ExceptionHandling
             _factory = factory;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext? context)
         {
             try
             {

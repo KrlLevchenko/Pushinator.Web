@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Pushinator.Web.Handlers.Auth
+namespace Pushinator.Web.Api.Auth.Auth
 {
     public class Request : IRequest<Response>
     {

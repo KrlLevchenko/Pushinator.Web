@@ -1,6 +1,6 @@
 using Dodo.Primitives;
 
-namespace Pushinator.Web.Handlers.Users.GetById
+namespace Pushinator.Web.Api.Users.GetById
 {
     public class Response
     {

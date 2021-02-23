@@ -1,4 +1,4 @@
-namespace Pushinator.Web.Handlers.Users.GetAll
+namespace Pushinator.Web.Api.Users.GetAll
 {
     public class Response
     {

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -7,7 +6,7 @@ using LinqToDB;
 using MediatR;
 using Pushinator.Web.Model;
 
-namespace Pushinator.Web.Handlers.Users.GetAll
+namespace Pushinator.Web.Api.Users.GetAll
 {
     public class Handler: IRequestHandler<Request,Response>
     {

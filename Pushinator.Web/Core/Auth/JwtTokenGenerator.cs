@@ -8,19 +8,15 @@ namespace Pushinator.Web.Core.Auth
 {
     public static class JwtTokenGenerator
     {
-        public static string GenerateToken(string userId, string login)
+        public static string GenerateToken(ClaimsIdentity claimIdentity)
         {
-            var claimIdentity = new ClaimsIdentity();
-            claimIdentity.AddClaim(new Claim(ClaimTypes.Name, login));
-            claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
-            
             var jwt = new JwtSecurityToken(
-                issuer: JwtConfig.Issuer,
-                audience: JwtConfig.Audience,
+                issuer: AuthConfig.Issuer,
+                audience: AuthConfig.Audience,
                 notBefore: DateTime.UtcNow,
                 claims: claimIdentity.Claims,
                 expires: DateTime.UtcNow.Add(TimeSpan.FromHours(24)),
-                signingCredentials: new SigningCredentials(JwtConfig.Key, SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(AuthConfig.Key, SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return encodedJwt;

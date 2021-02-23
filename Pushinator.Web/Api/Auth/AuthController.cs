@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pushinator.Web.Api.Auth.Auth;
 
-namespace Pushinator.Web.Controllers
+namespace Pushinator.Web.Api.Auth
 {
     [AllowAnonymous]
     [Route("api/[controller]")]
@@ -17,6 +18,6 @@ namespace Pushinator.Web.Controllers
             _mediator = mediator;
         }
 
-        public Task<Handlers.Auth.Response> Post(Handlers.Auth.Request request, CancellationToken ct) => _mediator.Send(request, ct);
+        public Task<Response> Post(Request request, CancellationToken ct) => _mediator.Send(request, ct);
     }
 }

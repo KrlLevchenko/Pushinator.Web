@@ -1,13 +1,13 @@
 using AutoMapper;
 using Pushinator.Web.Model;
 
-namespace Pushinator.Web.Handlers.Users.GetAll
+namespace Pushinator.Web.Api.Users.GetById
 {
     public class Mapper: Profile
     {
         public Mapper()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, Response>();
         }
     }
 }

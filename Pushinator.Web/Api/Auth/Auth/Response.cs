@@ -1,4 +1,4 @@
-namespace Pushinator.Web.Handlers.Auth
+namespace Pushinator.Web.Api.Auth.Auth
 {
     public class Response
     {

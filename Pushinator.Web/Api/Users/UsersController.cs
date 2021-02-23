@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Pushinator.Web.Controllers
+namespace Pushinator.Web.Api.Users
 {
     [Route("api/[controller]")]
     public class UsersController: Controller
@@ -15,9 +15,9 @@ namespace Pushinator.Web.Controllers
             _mediator = mediator;
         }
 
-        public Task<Handlers.Users.GetAll.Response> Get(Handlers.Users.GetAll.Request request, CancellationToken ct) => _mediator.Send(request, ct);
+        public Task<GetAll.Response> Get(GetAll.Request request, CancellationToken ct) => _mediator.Send(request, ct);
         
         [HttpGet("{id}")]
-        public Task<Handlers.Users.GetById.Response> GetById(Handlers.Users.GetById.Request request, CancellationToken ct) => _mediator.Send(request, ct);
+        public Task<GetById.Response> GetById(GetById.Request request, CancellationToken ct) => _mediator.Send(request, ct);
     }
 }
