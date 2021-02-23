@@ -22,11 +22,7 @@ namespace Pushinator.Web.AppStart
 
         public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(o =>
-                {
-                    o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
@@ -43,21 +39,21 @@ namespace Pushinator.Web.AppStart
                         IssuerSigningKey = Key,
                         ValidateIssuerSigningKey = true,
                     };
-            }).AddGoogle(options =>
-            {
-                options.ClientId = configuration["AuthOptions:Google:ClientId"];
-                options.ClientSecret = configuration["AuthOptions:Google:ClientSecret"];
-            })
-            .AddFacebook(options =>
-            {
-                options.ClientId = configuration["AuthOptions:Facebook:ClientId"];
-                options.ClientSecret = configuration["AuthOptions:Facebook:ClientSecret"];
-            })
-            .AddMicrosoftAccount(options =>
-            {
-                options.ClientId = configuration["AuthOptions:Microsoft:ClientId"];
-                options.ClientSecret = configuration["AuthOptions:Microsoft:ClientSecret"];
-            });
+            });//.AddGoogle(options =>
+            // {
+            //     options.ClientId = configuration["AuthOptions:Google:ClientId"];
+            //     options.ClientSecret = configuration["AuthOptions:Google:ClientSecret"];
+            // })
+            // .AddFacebook(options =>
+            // {
+            //     options.ClientId = configuration["AuthOptions:Facebook:ClientId"];
+            //     options.ClientSecret = configuration["AuthOptions:Facebook:ClientSecret"];
+            // })
+            // .AddMicrosoftAccount(options =>
+            // {
+            //     options.ClientId = configuration["AuthOptions:Microsoft:ClientId"];
+            //     options.ClientSecret = configuration["AuthOptions:Microsoft:ClientSecret"];
+            // });
             
             return services;
         }

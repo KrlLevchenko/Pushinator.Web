@@ -36,8 +36,8 @@ namespace Pushinator.Web.Api.Auth.Auth
                     claimIdentity.AddClaim(new Claim(ClaimTypes.Name, user.Email));
                     claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
-                    await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimIdentity));
+                    // await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    //     new ClaimsPrincipal(claimIdentity));
                     
                     return Response.Success(JwtTokenGenerator.GenerateToken(claimIdentity));
                 }
