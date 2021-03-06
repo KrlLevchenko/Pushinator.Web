@@ -1,4 +1,5 @@
 import { AuthResponse } from './Contracts/AuthResponse'
+import { toast } from 'react-toastify'
 
 class ApiClient {
 	token: string | undefined
@@ -24,6 +25,10 @@ class ApiClient {
 		if (response.status === 401) {
 			document.location.href = '/'
 			throw new Error('Unauthorized')
+		}
+		if (response.status >= 500){
+			toast.error('Ошибка на сервере!')
+			throw new Error('Internal Server error')
 		}
 
 		return await response.json()
