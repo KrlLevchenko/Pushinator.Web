@@ -7,6 +7,7 @@ import {useHistory} from 'react-router-dom'
 import FacebookIcon from './assets/facebook.png'
 import GoogleIcon from './assets/google.jpg'
 import MicrosoftIcon from './assets/microsoft.png'
+import {Toolbar} from "../../Components/Toolbar";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -70,7 +71,8 @@ const Login: React.FC<any> = () => {
     }
 
     return (
-        <Container>
+        <Container>       
+            <Toolbar/>
             <Box className={classes.form}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Логин
