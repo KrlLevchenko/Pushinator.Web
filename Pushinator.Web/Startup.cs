@@ -1,12 +1,13 @@
+using System.IO;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pushinator.Web.AppStart;
@@ -33,8 +34,8 @@ namespace Pushinator.Web
             var connectionString = _configuration.GetConnectionString("Db");
             
             services.AddScoped(_ => new Context(connectionString));
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Client/public"; });
-
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Client/build"; });
+            
             services.AddMediatR(typeof(Startup).Assembly);
             services.AddValidators(typeof(Startup));
             services.AddErrorHandling(typeof(Startup));
@@ -64,11 +65,16 @@ namespace Pushinator.Web
                     "{controller=Home}/{action=Index}/{id?}");
             });
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Client", "build"))
+            });
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "client";
 
-                if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
+               if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
         }
         
