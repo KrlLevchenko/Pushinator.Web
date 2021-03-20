@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { AppBar, Button, createStyles, Link, Toolbar as MaterialUIToolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, createStyles, Link, Toolbar as MaterialUIToolbar} from '@material-ui/core'
 import { TokenStorage } from '../../ApiClient/tokenStorage'
 import { useHistory } from 'react-router-dom'
 import { makeStyles, Theme } from '@material-ui/core/styles'

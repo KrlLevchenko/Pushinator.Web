@@ -33,7 +33,7 @@ export abstract class BaseClient {
 			document.location.href = '/'
 			throw new Error('Unauthorized')
 		}
-		if (response.status >= 500 || response.status == 404) {
+		if (response.status >= 500 || response.status === 404) {
 			toast.error('Ошибка на сервере!')
 			throw new Error('Internal Server error')
 		}
