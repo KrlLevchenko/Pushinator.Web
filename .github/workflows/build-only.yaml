@@ -3,10 +3,7 @@ on: push
 jobs: 
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet: [ '3.1.x' ]
-
+    
     steps:
     - uses: actions/checkout@v2
     - name: Setup dotnet ${{ matrix.dotnet-version }}
