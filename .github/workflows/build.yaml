@@ -31,7 +31,8 @@ jobs:
    
     - name: Build and push
       uses: docker/build-push-action@v2
-      working-directory: Pushinator.Web
       with:
         push: true
-        tags: takayoshisimizu/pushinator-web:latest
+        context: Pushinator.Web
+        repository: takayoshisimizu/pushinator-web
+        tag_with_ref: true
