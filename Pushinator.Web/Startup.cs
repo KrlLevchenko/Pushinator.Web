@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Pushinator.Web.AppStart;
 using Pushinator.Web.Model;
 
@@ -26,6 +27,7 @@ namespace Pushinator.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(configure => configure.AddConsole());
             services.AddControllers(configure => configure.Filters.Add(new AuthorizeFilter()));
 
             var connectionString = _configuration.GetConnectionString("Db");

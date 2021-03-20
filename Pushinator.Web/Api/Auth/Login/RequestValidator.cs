@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Pushinator.Web.Api.Auth.Auth
+namespace Pushinator.Web.Api.Auth.Login
 {
     public class RequestValidator: AbstractValidator<Request>
     {

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pushinator.Web.Api.Auth.Auth;
 
 namespace Pushinator.Web.Api.Auth
 {
@@ -18,6 +17,10 @@ namespace Pushinator.Web.Api.Auth
             _mediator = mediator;
         }
 
-        public Task<Response> Post(Request request, CancellationToken ct) => _mediator.Send(request, ct);
+        [HttpPost("login")]
+        public Task<Login.Response> Login(Login.Request request, CancellationToken ct) => _mediator.Send(request, ct);
+        
+        [HttpPost("register")]
+        public Task<Register.Response> Register(Register.Request request, CancellationToken ct) => _mediator.Send(request, ct);
     }
 }

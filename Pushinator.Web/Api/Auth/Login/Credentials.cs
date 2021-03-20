@@ -1,4 +1,4 @@
-namespace Pushinator.Web.Api.Auth.Auth
+namespace Pushinator.Web.Api.Auth.Login
 {
     public class Credentials
     {
