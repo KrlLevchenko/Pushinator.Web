@@ -16,14 +16,20 @@ const NotificationList: React.FC<any> = () => {
 	const [isPushButtonVisible, setIsPushButtonVisible] = useState(false)
 
 	useEffect(() => {
-		navigator.serviceWorker.register('/serviceWorker.js').then((x) => setIsPushButtonVisible(true))
+		navigator.serviceWorker.register('/serviceWorker.js').then((x) => {
+			setIsPushButtonVisible(true);
+		})
 		Notification.requestPermission().then((s) => console.log('notification status', s))
 	}, [])
 
 	const showNotification = () => {
-		navigator.serviceWorker.getRegistration().then((r) =>
-			r?.showNotification('Test local notification'),
-		)
+		navigator.serviceWorker.getRegistration().then((r) => r?.showNotification('Test local notification'))
+	}
+
+	const longCalculation = () => {
+		navigator.serviceWorker.getRegistration().then((r) => {
+			r?.active?.postMessage({ max: 199999 })
+		})
 	}
 
 	return (
@@ -32,9 +38,14 @@ const NotificationList: React.FC<any> = () => {
 
 			<Container className={classes.clientPushButton}>
 				{isPushButtonVisible && (
-					<Button variant="contained" onClick={showNotification}>
-						Клиентский пуш
-					</Button>
+					<>
+						<Button variant="contained" onClick={showNotification}>
+							Клиентский пуш
+						</Button>
+						<Button variant="contained" onClick={longCalculation}>
+							Долгие вычисление и показа пуша
+						</Button>
+					</>
 				)}
 			</Container>
 		</>
