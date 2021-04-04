@@ -28,11 +28,14 @@ jobs:
       with:
           username: ${{ secrets.DOCKER_LOGIN }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
+    - name: Get short SHA
+      id: short_sha
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
    
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
         push: true
         context: Pushinator.Web         
-        tags: takayoshisimizu/pushinator-web
-        tag_with_ref: true
+        tags: "takayoshisimizu/pushinator-web:${{ steps.short_sha.outputs.sha8 }}"
