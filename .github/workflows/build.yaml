@@ -38,13 +38,4 @@ jobs:
       with:
         push: true
         context: Pushinator.Web
-        file: Pushinator.Web/Dockerfile_web
         tags: "takayoshisimizu/pushinator-web:${{ steps.short_sha.outputs.sha7 }}"
-        
-    - name: Build and push migrator
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        context: Pushinator.Web
-        file: Pushinator.Web/Dockerfile_migrator
-        tags: "takayoshisimizu/pushinator-migrator:${{ steps.short_sha.outputs.sha7 }}"
