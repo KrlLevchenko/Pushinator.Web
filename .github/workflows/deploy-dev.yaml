@@ -18,6 +18,7 @@ jobs:
         with:
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_HOST_USERNAME }}
+          debug: true
           key: ${{ secrets.DEV_HOST_PRIVATE_KEY }}
           passphrase: ${{ secrets.DEV_HOST_PASSPHRASE }}
           script: |
