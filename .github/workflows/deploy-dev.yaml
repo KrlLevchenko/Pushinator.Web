@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'SHA version'
+        required: true
+jobs: 
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout the repo
+      - name: 'Checkout Github Action'
+        uses: actions/checkout@master
+
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_HOST_USERNAME }}
+          key: ${{ secrets.DEV_HOST_PRIVATE_KEY }}
+          passphrase: ${{ secrets.DEV_HOST_PASSPHRASE }}
+          script: |
+            docker stop pushinator-web
+            docker rm pushinator-web
+            docker run --name pushinator-web --network dev -p 127.0.0.1:2000:80 -e ConnectionStrings__Db="${{ secrets.DEV_HOST_MYSQL_CONNECTION }}" -d takayoshisimizu/pushinator-web:${{ github.event.inputs.sha }}
+            docker exec pushinator-web dotnet /app/Pushinator.Web.dll --migrate-db
+  
