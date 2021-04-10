@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 using Pushinator.Web.AppStart;
 using Pushinator.Web.Model;
 
@@ -57,7 +58,8 @@ namespace Pushinator.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
+            app.UseMetricServer();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
