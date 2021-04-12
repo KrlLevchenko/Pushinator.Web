@@ -75,8 +75,7 @@ namespace Pushinator.Web
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "client";
-
-               if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
+                if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
         }
         
