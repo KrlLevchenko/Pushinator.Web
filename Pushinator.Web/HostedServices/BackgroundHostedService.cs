@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using LinqToDB;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 using Pushinator.Web.Model;
@@ -10,7 +11,7 @@ namespace Pushinator.Web.HostedServices
 {
     public class BackgroundHostedService: IHostedService
     {
-        private readonly Context _context;
+        private readonly IServiceProvider _serviceProvider;
         private readonly Gauge _usersCountGauge = Metrics.CreateGauge("users_count", "Number of active users");
 
         private readonly Histogram _randomNumberHistogram = Metrics.CreateHistogram("random_number", "Random number", new HistogramConfiguration
@@ -19,9 +20,9 @@ namespace Pushinator.Web.HostedServices
         });
         private readonly Random _random = new Random();
         
-        public BackgroundHostedService(Context context)
+        public BackgroundHostedService(IServiceProvider serviceProvider)
         {
-            _context = context;
+            _serviceProvider = serviceProvider;
         }
         
         public Task StartAsync(CancellationToken ct)
@@ -30,10 +31,16 @@ namespace Pushinator.Web.HostedServices
             {
                 while (true)
                 {
-                    var usersCount = await _context.Users.CountAsync(ct);
-                    _usersCountGauge.Set(usersCount);
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var context = scope.ServiceProvider.GetService<Context>();
+                        var usersCount = await context.Users.CountAsync(ct);
+                        _usersCountGauge.Set(usersCount);
 
-                    _randomNumberHistogram.Observe(_random.NextDouble() * 100);
+                        _randomNumberHistogram.Observe(_random.NextDouble() * 100);
+                    }
+                    
+                    
                     Thread.Sleep(1000);
                 }
 
