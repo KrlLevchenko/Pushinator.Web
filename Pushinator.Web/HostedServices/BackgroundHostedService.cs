@@ -27,6 +27,7 @@ namespace Pushinator.Web.HostedServices
         
         public Task StartAsync(CancellationToken ct)
         { 
+            
             Task.Factory.StartNew(async () =>
             {
                 while (true)
