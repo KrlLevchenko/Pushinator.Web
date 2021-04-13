@@ -5,6 +5,7 @@ using LinqToDB;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Prometheus;
 using Pushinator.Web.Core.Auth;
 using Pushinator.Web.Model;
 
@@ -14,6 +15,12 @@ namespace Pushinator.Web.Api.Auth.Login
     {
         private readonly Context _context;
 
+        private readonly Counter _counter = Metrics.CreateCounter(
+            "auth_counter",
+            "Count of auth actions",
+            "action_type",
+            "result");
+        
         public Handler(Context context)
         {
             _context = context;
@@ -32,10 +39,12 @@ namespace Pushinator.Web.Api.Auth.Login
                     claimIdentity.AddClaim(new Claim(ClaimTypes.Name, user.Email));
                     claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
+                    _counter.Labels("login", "false").Inc();
                     return Response.Success(JwtTokenGenerator.GenerateToken(claimIdentity));
                 }
             }
 
+            _counter.Labels("login", "true").Inc();
             return Response.Fail();
         }
     }

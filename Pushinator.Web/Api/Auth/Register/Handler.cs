@@ -5,6 +5,7 @@ using Dodo.Primitives;
 using LinqToDB;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Prometheus;
 using Pushinator.Web.Api.Auth.Login;
 using Pushinator.Web.Model;
 
@@ -14,6 +15,12 @@ namespace Pushinator.Web.Api.Auth.Register
     {
         private readonly Context _context;
         private readonly IMediator _mediator;
+        
+        private readonly Counter _counter = Metrics.CreateCounter(
+            "auth_counter",
+            "Count of auth actions",
+            "action_type",
+            "result");
 
         public Handler(Context context, IMediator mediator)
         {
@@ -26,11 +33,14 @@ namespace Pushinator.Web.Api.Auth.Register
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.UserDto.Email, ct);
             if (user != null)
             {
+                _counter.Labels("register", "false").Inc();
                 return Response.UserAlreadyExist();
             }
             
             await CreateUser(request, ct);
             var token = await GetToken(request, ct);
+            
+            _counter.Labels("register", "true").Inc();
             return Response.Success(token);
         }
 
