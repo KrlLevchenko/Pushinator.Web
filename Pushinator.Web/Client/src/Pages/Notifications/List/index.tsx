@@ -15,12 +15,12 @@ const NotificationList: React.FC<any> = () => {
 	const classes = useStyles()
 	const [isPushButtonVisible, setIsPushButtonVisible] = useState(false)
 
-	useEffect(() => {
-		navigator.serviceWorker.register('/serviceWorker.js').then((x) => {
-			setIsPushButtonVisible(true);
-		})
-		Notification.requestPermission().then((s) => console.log('notification status', s))
-	}, [])
+	// useEffect(() => {
+	// 	navigator.serviceWorker.register('/serviceWorker.js').then((x) => {
+	// 		setIsPushButtonVisible(true);
+	// 	})
+	// 	Notification.requestPermission().then((s) => console.log('notification status', s))
+	// }, [])
 
 	const showNotification = () => {
 		navigator.serviceWorker.getRegistration().then((r) => r?.showNotification('Test local notification'))
