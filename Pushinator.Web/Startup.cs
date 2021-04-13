@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 using Pushinator.Web.AppStart;
+using Pushinator.Web.HostedServices;
 using Pushinator.Web.Model;
 
 namespace Pushinator.Web
@@ -46,6 +47,8 @@ namespace Pushinator.Web
             services.AddAutoMapper(typeof(Startup));
             services.AddHttpContextAccessor();
             services.AddAuth(_configuration);
+
+            services.AddHostedService<BackgroundHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
